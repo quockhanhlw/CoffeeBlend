@@ -165,7 +165,7 @@
 		              					<h3><a href="{{ route('product.single',$pizza->id) }}">{{ $pizza->name }}</a></h3>
 		              					<p>{{ $pizza->description }}</p>
 		              					<p class="price"><span>{{ $pizza->price }}</span></p>
-		              					<p><a href="{{ route('product.single',$pizza->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$pizza->id) }}" class="btn btn-primary btn-outline-primary">Show detaill</a></p>
 		              				</div>
 		              			</div>
 		              		</div>
