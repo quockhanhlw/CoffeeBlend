@@ -98,17 +98,42 @@
                 </div>
 				<div class="col-md-6">
 	                <div class="form-group">
-	                  <input name="user_id" type="hidden" value="{{ Auth::user()->id }}" class="form-control" placeholder="">
+	                  <input name="user_id" type="hidden" value="{{ Auth::user()->user_id }}" class="form-control" placeholder="">
 	                </div>
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 					    <div class="radio">
-                      <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Place an order</button>
+                      <button type="submit" id="submitOrderBtn" name="submit" class="btn btn-primary py-3 px-4">Place an order</button>
 						</div>
 					</div>
                 </div>
 	            </div>
 	          </form><!-- END -->
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    // Ngăn chặn double submit
+    $('form.billing-form').on('submit', function(e) {
+        var $submitBtn = $('#submitOrderBtn');
+        
+        // Kiểm tra nếu đã submit rồi
+        if ($submitBtn.prop('disabled')) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Disable button và thay đổi text
+        $submitBtn.prop('disabled', true);
+        $submitBtn.html('<span class="spinner-border spinner-border-sm mr-2"></span>Processing...');
+        
+        // Cho phép form submit
+        return true;
+    });
+});
+</script>
+@endpush
+
 </x-app-layout>

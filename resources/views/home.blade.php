@@ -58,7 +58,66 @@
     <section class="ftco-intro">
     	<div class="container-wrap">
     		<div class="wrap d-md-flex align-items-xl-end">
-    			<div class="info">
+    			
+    			<div class="book p-4">
+    				<h3>Book a Table</h3>
+					@auth
+    				<form action="{{ route('booking.tables') }}" method="POST" class="appointment-form">
+					   @csrf
+    					<div class="d-md-flex">
+    						<div class="form-group">
+								<input type="text" name="last_name" class="form-control" placeholder="Last Name">
+    						</div>
+							@if ($errors->has('last_name'))
+								<p class="alert alert-success">{{ $errors->first('last_name') }}</p>
+							@endif
+
+    						<div class="form-group ml-md-4">
+    							<input type="text" name="first_name" class="form-control" placeholder="First Name">
+    						</div>
+							@if ($errors->has('first_name'))
+								<p class="alert alert-success">{{ $errors->first('first_name') }}</p>
+							@endif
+
+    					</div>
+    					<div class="d-md-flex">
+    						<div class="form-group">
+	    						<div class="input-wrap">
+			    		<div class="icon"><span class="ion-md-calendar"></span></div>
+			    		<input type="text" name="date" class="form-control appointment_date" placeholder="Date" readonly autocomplete="off">
+			    	</div>
+    						</div>
+    						<div class="form-group ml-md-4">
+	    						<div class="input-wrap">
+			    		<div class="icon"><span class="ion-ios-clock"></span></div>
+			    		<input type="time" name="time" class="form-control time-picker" min="08:00" max="21:00" required>
+			    	</div>
+    						</div>
+
+    			    		<input type="hidden" value="{{ Auth::user()->user_id }}" name="user_id">
+
+    						<div class="form-group ml-md-4">
+    							<input type="text" name="phone" class="form-control" placeholder="Phone Number">
+    						</div>
+    					</div>
+    					<div class="d-md-flex">
+    						<div class="form-group">
+    				      <textarea id="" name="message" cols="30" rows="2" class="form-control" placeholder="Notes"></textarea>
+    				    </div>
+    				    <div class="form-group ml-md-4">
+    				      <input type="submit" name="submit" value="Book" class="btn btn-white py-3 px-4">
+    				    </div>
+    					</div>
+    				</form>
+					@endauth
+					@guest
+						<div class="text-center p-5">
+    					<h3 class="mb-3" style="color: white;">Please <a href="{{ route('login') }}">Login</a> or <a href="{{ route('register') }}">Register</a> to Book a Table.</h3>
+						</div>
+					@endguest
+    			</div>
+				
+				<div class="info">
     				<div class="row no-gutters">
     					<div class="col-md-4 d-flex ftco-animate">
     						<div class="icon"><span class="icon-phone"></span></div>
@@ -83,64 +142,7 @@
     					</div>
     				</div>
     			</div>
-				
-    			<div class="book p-4">
-    				<h3>Book a Table</h3>
-					@auth
-    				<form action="{{ route('booking.tables') }}" method="POST" class="appointment-form">
-					   @csrf
-    					<div class="d-md-flex">
-    						<div class="form-group">
-								<input type="text" name="last_name" class="form-control" placeholder="Last Name">
-    						</div>
-							@if ($errors->has('last_name'))
-								<p class="alert alert-success">{{ $errors->first('last_name') }}</p>
-							@endif
-
-    						<div class="form-group ml-md-4">
-    							<input type="text" name="first_name" class="form-control" placeholder="First Name">
-    						</div>
-							@if ($errors->has('first_name'))
-								<p class="alert alert-success">{{ $errors->first('first_name') }}</p>
-							@endif
-
-    					</div>
-    					<div class="d-md-flex">
-    						<div class="form-group">
-    							<div class="input-wrap">
-    			    		<div class="icon"><span class="ion-md-calendar"></span></div>
-    			    		<input type="text" name="date" class="form-control appointment_date" placeholder="Date">
-    		    		</div>
-    						</div>
-    						<div class="form-group ml-md-4">
-    							<div class="input-wrap">
-    			    		<div class="icon"><span class="ion-ios-clock"></span></div>
-    			    		<input type="text" name="time" class="form-control appointment_time" placeholder="Time">
-    		    		</div>
-    						</div>
-
-    			    		<input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
-
-    						<div class="form-group ml-md-4">
-    							<input type="text" name="phone" class="form-control" placeholder="Phone Number">
-    						</div>
-    					</div>
-    					<div class="d-md-flex">
-    						<div class="form-group">
-    				      <textarea id="" name="message" cols="30" rows="2" class="form-control" placeholder="Notes"></textarea>
-    				    </div>
-    				    <div class="form-group ml-md-4">
-    				      <input type="submit" name="submit" value="Book" class="btn btn-white py-3 px-4">
-    				    </div>
-    					</div>
-    				</form>
-					@endauth
-					@guest
-						<div class="text-center p-5">
-    					<h3 class="mb-3" style="color: white;">Please <a href="{{ route('login') }}">Login</a> or <a href="{{ route('register') }}">Register</a> to Book a Table.</h3>
-						</div>
-					@endguest
-    			</div>
+    			
     		</div>
     	</div>
     </section>
@@ -305,12 +307,12 @@
 	   @foreach($products as $product)
        	<div class="col-md-3">
        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url({{ asset('assets/images/'.$product->image.'') }});"></a>
+    					<a href="#" class="img" style="background-image: url({{ asset('assets/images/'.$product->product_image.'') }});"></a>
     					<div class="text text-center pt-4">
-    						<h3><a href="{{ route('product.single', $product->id) }}">{{ $product->name }}</a></h3>
+    						<h3><a href="{{ route('product.single', $product->product_id) }}">{{ $product->product_name }}</a></h3>
     						<p>{{ $product->description }}</p>
     						<p class="price"><span>{{ $product->price }}₫</span></p>
-    						<p><a href="{{ route('product.single', $product->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+    						<p><a href="{{ route('product.single', $product->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
     					</div>
     				</div>
        		</div>

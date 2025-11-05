@@ -1,3 +1,80 @@
+/* --- Booking widgets fixes --- */
+/* Ensure the datepicker/timepicker dropdowns appear above overlays */
+.datepicker-dropdown,
+.ui-timepicker-wrapper {
+  z-index: 3000 !important;
+}
+
+/* Style for time select dropdown */
+.input-wrap select.form-control {
+  padding-left: 35px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.input-wrap select.form-control option {
+  background-color: #c49b63;
+  color: white;
+  padding: 8px;
+}
+
+.input-wrap select.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+/* Style for HTML5 time input */
+.input-wrap input[type="time"].time-picker {
+  padding-left: 35px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  color-scheme: dark;
+}
+
+.input-wrap input[type="time"].time-picker:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+  outline: none;
+}
+
+.input-wrap input[type="time"].time-picker::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.input-wrap input[type="time"].time-picker::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Prevent clipping in the booking panel */
+.ftco-intro .wrap .book {
+  overflow: visible;
+  order: 2; /* Book a Table hiển thị bên phải */
+}
+
+.ftco-intro .wrap .info {
+  order: 1; /* Info hiển thị bên trái */
+}
+
+.ftco-intro .wrap .book .appointment-form {
+  overflow: visible;
+}
+
+.ftco-intro .wrap .book .appointment-form .form-group {
+  overflow: visible;
+}
+
+.ftco-intro .wrap .book .appointment-form .input-wrap {
+  overflow: visible;
+}
 /*!
  * Bootstrap v4.1.0 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
@@ -8249,9 +8326,17 @@ h1, h2, h3, h4, h5,
 
 .ui-timepicker-wrapper {
   position: absolute;
-  top: 100% !important; /* Hiển thị ngay bên dưới input */
-  left: 0 !important;   /* Căn lề trái với input */
-  z-index: 99;         /* Đảm bảo nó nổi lên trên các phần tử khác */
+  /* Let the plugin calculate positioning; just ensure it stays on top */
+  z-index: 11000 !important;
+  width: 8.5em !important; /* Ensure room for strings like 10:00 am */
+}
+
+/* Normalize timepicker item rendering to avoid forced uppercase/spacing from theme */
+.ui-timepicker-list li {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  white-space: nowrap;
+  font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 .appointment {
   padding: 20px !important; }
@@ -8521,15 +8606,17 @@ textarea.form-control {
 
 .ftco-footer {
   font-size: 16px;
-  padding: 7em 0;
+  /* slightly reduced vertical padding to keep footer compact and balanced */
+  padding: 5em 0;
   background: #120f0f; }
   .ftco-footer .ftco-footer-logo {
     text-transform: uppercase;
     letter-spacing: .1em; }
   .ftco-footer .ftco-footer-widget h2 {
     font-weight: normal;
+    /* ensure footer headings are visible on dark background */
     color: #fff;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     font-size: 16px;
     font-weight: 400;
     position: relative;
@@ -8552,7 +8639,12 @@ textarea.form-control {
   .ftco-footer .ftco-heading-2 {
     font-size: 17px;
     font-weight: 400;
-    color: #000; }
+    color: #fff; }
+
+  /* Make footer columns align to the top so headings line up */
+  .ftco-footer .row {
+    align-items: flex-start;
+  }
   .ftco-footer .block-21 .text .heading {
     font-size: 16px;
     font-weight: 300; }

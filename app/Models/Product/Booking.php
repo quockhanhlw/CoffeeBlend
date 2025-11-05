@@ -9,6 +9,13 @@ class Booking extends Model
 {
     use HasFactory;
 
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'booking_id';
+
     protected $table = 'bookings';
 
     protected $fillable = [
@@ -20,6 +27,13 @@ class Booking extends Model
         'message',
         'user_id',
         'status',
-
     ];
+
+    public $timestamps = true;
+
+    // Relationship with User
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
 }

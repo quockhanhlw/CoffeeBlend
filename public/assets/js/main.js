@@ -4,7 +4,69 @@
  });
 
 $(document).ready(function(){
-    $('.appointment_time').timepicker({});
+	// Initialize timepicker with sane defaults and ensure it renders above other elements
+	var $timeInputs = $('.appointment_time');
+	$timeInputs.timepicker({
+		// jonthornton/jquery-timepicker options
+		step: 30,
+		timeFormat: 'h:mm a',           // e.g. 10:00 am
+		minTime: '8:00am',              // limit between 08:00 am
+		maxTime: '9:00pm',              // and 09:00 pm
+		scrollDefault: '8:00am',
+		appendTo: 'body',
+		disableTextInput: true,
+		forceRoundTime: true
+	});
+
+	// Reposition dropdown above the input if there's not enough space below
+	$timeInputs.on('showTimepicker', function(){
+		var $input = $(this);
+		var $w = $('.ui-timepicker-wrapper:visible').last();
+		if (!$w.length) return;
+		
+		// Use setTimeout to ensure dropdown is fully rendered before positioning
+		setTimeout(function() {
+			var inputOffset = $input.offset();
+			var inputHeight = $input.outerHeight();
+			var dropdownHeight = $w.outerHeight();
+			var windowScrollTop = $(window).scrollTop();
+			
+			// Calculate position ABOVE the input (subtract dropdown height)
+			var top = inputOffset.top - dropdownHeight - 8; // 8px gap above input
+			var left = inputOffset.left;
+			
+			// Force absolute positioning with very high z-index
+			$w.css({ 
+				top: top + 'px', 
+				left: left + 'px', 
+				position: 'absolute', 
+				'z-index': 999999,
+				'bottom': 'auto' // override any bottom positioning
+			});
+		}, 10);
+	});
+
+	// Initialize datepicker for booking date input
+	if ($.fn.datepicker) {
+		$('.appointment_date').datepicker({
+			format: 'yyyy-mm-dd',
+			autoclose: true,
+			todayHighlight: true,
+			orientation: 'bottom',
+			// Render into body to avoid clipping and z-index issues
+			container: 'body'
+		});
+	}
+
+	// Clicking the calendar/clock icon should open the related picker
+	$('.input-wrap .icon').on('click', function(){
+		var $input = $(this).siblings('input');
+		if ($input.hasClass('appointment_date') && $.fn.datepicker) {
+			$input.datepicker('show');
+		} else if ($input.hasClass('appointment_time')) {
+			$input.focus();
+		}
+	});
 });
 
 (function($) {

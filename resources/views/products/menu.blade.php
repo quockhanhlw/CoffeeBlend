@@ -87,12 +87,12 @@
                         @foreach ($drinks as $drink)
 		              		<div class="col-md-4 text-center">
 		              			<div class="menu-wrap">
-		              				<a href="{{ route('product.single',$drink->id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$drink->image.'') }});"></a>
+		              				<a href="{{ route('product.single',$drink->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$drink->image.'') }});"></a>
 		              				<div class="text">
-		              					<h3><a href="{{ route('product.single',$drink->id) }}">{{ $drink->name }}</a></h3>
+		              					<h3><a href="{{ route('product.single',$drink->product_id) }}">{{ $drink->name }}</a></h3>
 		              					<p>{{ $drink->description }}</p>
 		              					<p class="price"><span>{{ $drink->price }}₫</span></p>
-		              					<p><a href="{{ route('product.single',$drink->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$drink->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
 		              				</div>
 		              			</div>
 		              		</div>
@@ -106,12 +106,12 @@
                         @foreach ($coffees as $coffee)
 		              		<div class="col-md-4 text-center">
 		              			<div class="menu-wrap">
-		              				<a href="{{ route('product.single',$coffee->id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$coffee->image.'') }});"></a>
+		              				<a href="{{ route('product.single',$coffee->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$coffee->image.'') }});"></a>
 		              				<div class="text">
-		              					<h3><a href="{{ route('product.single',$coffee->id) }}">{{ $coffee->name }}</a></h3>
+		              					<h3><a href="{{ route('product.single',$coffee->product_id) }}">{{ $coffee->name }}</a></h3>
 		              					<p>{{ $coffee->description }}</p>
 		              					<p class="price"><span>{{ $coffee->price }}</span></p>
-		              					<p><a href="{{ route('product.single',$coffee->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$coffee->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
 		              				</div>
 		              			</div>
 		              		</div>
@@ -124,12 +124,12 @@
                         @foreach ($desserts as $dessert)
 		              		<div class="col-md-4 text-center">
 		              			<div class="menu-wrap">
-		              				<a href="{{ route('product.single',$dessert->id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$dessert->image.'') }});"></a>
+		              				<a href="{{ route('product.single',$dessert->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$dessert->image.'') }});"></a>
 		              				<div class="text">
-		              					<h3><a href="{{ route('product.single',$dessert->id) }}">{{ $dessert->name }}</a></h3>
+		              					<h3><a href="{{ route('product.single',$dessert->product_id) }}">{{ $dessert->name }}</a></h3>
 		              					<p>{{ $dessert->description }}</p>
 		              					<p class="price"><span>{{ $dessert->price }}</span></p>
-		              					<p><a href="{{ route('product.single',$dessert->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$dessert->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
 		              				</div>
 		              			</div>
 		              		</div>
@@ -142,12 +142,12 @@
                         @foreach ($burgers as $burger)
 		              		<div class="col-md-4 text-center">
 		              			<div class="menu-wrap">
-		              				<a href="{{ route('product.single',$burger->id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$burger->image.'') }});"></a>
+		              				<a href="{{ route('product.single',$burger->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$burger->image.'') }});"></a>
 		              				<div class="text">
-		              					<h3><a href="{{ route('product.single',$burger->id) }}">{{ $burger->name }}</a></h3>
+		              					<h3><a href="{{ route('product.single',$burger->product_id) }}">{{ $burger->name }}</a></h3>
 		              					<p>{{ $burger->description }}</p>
 		              					<p class="price"><span>{{ $burger->price }}</span></p>
-		              					<p><a href="{{ route('product.single',$burger->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$burger->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
 		              				</div>
 		              			</div>
 		              		</div>
@@ -160,12 +160,12 @@
                         @foreach ($pizzas as $pizza)
 		              		<div class="col-md-4 text-center">
 		              			<div class="menu-wrap">
-		              				<a href="{{ route('product.single',$pizza->id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$pizza->image.'') }});"></a>
+		              				<a href="{{ route('product.single',$pizza->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$pizza->image.'') }});"></a>
 		              				<div class="text">
-		              					<h3><a href="{{ route('product.single',$pizza->id) }}">{{ $pizza->name }}</a></h3>
+		              					<h3><a href="{{ route('product.single',$pizza->product_id) }}">{{ $pizza->name }}</a></h3>
 		              					<p>{{ $pizza->description }}</p>
 		              					<p class="price"><span>{{ $pizza->price }}</span></p>
-		              					<p><a href="{{ route('product.single',$pizza->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$pizza->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
 		              				</div>
 		              			</div>
 		              		</div>
@@ -178,12 +178,12 @@
                         @foreach ($dishes as $dish)
 		              		<div class="col-md-4 text-center">
 		              			<div class="menu-wrap">
-		              				<a href="{{ route('product.single',$dish->id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$dish->image.'') }});"></a>
+		              				<a href="{{ route('product.single',$dish->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$dish->image.'') }});"></a>
 		              				<div class="text">
-		              					<h3><a href="{{ route('product.single',$dish->id) }}">{{ $dish->name }}</a></h3>
+		              					<h3><a href="{{ route('product.single',$dish->product_id) }}">{{ $dish->name }}</a></h3>
 		              					<p>{{ $dish->description }}</p>
 		              					<p class="price"><span>{{ $dish->price }}</span></p>
-		              					<p><a href="{{ route('product.single',$dish->id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+		              					<p><a href="{{ route('product.single',$dish->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
 		              				</div>
 		              			</div>
 		              		</div>

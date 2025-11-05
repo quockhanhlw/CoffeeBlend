@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
-  <title>CoffeeBlend Admin</title>
+  <title>CoffeeBlend Staff</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="{{ asset('assets/styles/style.css') }}" rel="stylesheet">
+   <link href="{{ asset('assets/styles/style.css') }}" rel="stylesheet">
     <style>
       /* Brand logo styling to match app header */
       .brand-logo { display: flex; flex-direction: column; line-height: 1; color: #fff !important; font-weight: 700; }
@@ -21,7 +21,7 @@
 <div id="wrapper">
   <nav class="navbar header-top fixed-top navbar-expand-lg navbar-light">
       <div class="container">
-      <a class="navbar-brand brand-logo" href="{{ route('admins.dashboard') }}">
+      <a class="navbar-brand brand-logo" href="{{ route('staffs.dashboard') }}">
         <span class="logo-top">COFFEE</span>
         <span class="logo-bottom">BLEND</span>
       </a>
@@ -33,25 +33,25 @@
       <div class="collapse navbar-collapse" id="navbarText">
 
 
-      @auth('admin')
+      @auth('staff')
 
         <ul class="navbar-nav side-nav" >
           <li class="nav-item">
-            <a class="nav-link" style="margin-left: 20px;" href="{{ route('admins.dashboard') }}">Home
+            <a class="nav-link" style="margin-left: 20px;" href="{{ route('staffs.dashboard') }}">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('all.staffs') }}" style="margin-left: 20px;">Staffs</a>
+            <a class="nav-link" href="{{ route('staff.all.staffs') }}" style="margin-left: 20px;">Staffs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('all.orders') }}" style="margin-left: 20px;">Orders</a>
+            <a class="nav-link" href="{{ route('all.orders.staff') }}" style="margin-left: 20px;">Orders</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('all.products') }}" style="margin-left: 20px;">Products</a>
+            <a class="nav-link" href="{{ route('all.products.staff') }}" style="margin-left: 20px;">Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('all.bookings') }}" style="margin-left: 20px;">Bookings</a>
+            <a class="nav-link" href="{{ route('all.bookings.staff') }}" style="margin-left: 20px;">Bookings</a>
           </li>
         </ul>
 
@@ -59,23 +59,23 @@
 
         <ul class="navbar-nav ml-md-auto d-md-flex">
 
-          @auth('admin')
+          @auth('staff')
           
             <li class="nav-item dropdown">
               <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ Auth::guard('admin')->user()->name }}
+                {{ Auth::guard('staff')->user()->name }}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('admin.logout') }}"onclick="event.preventDefault();
+                <a class="dropdown-item" href="{{ route('staff.logout') }}"onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">Logout</a>
-                  <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                  <form id="logout-form" action="{{ route('staff.logout') }}" method="POST" class="d-none">
                    @csrf
                   </form>
             </li>
 
           @else
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('view.login.admin') }}">Login</a>
+                <a class="nav-link" href="{{ route('view.login.staff') }}">Login</a>
               </li>
           @endauth          
           

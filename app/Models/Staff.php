@@ -7,17 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Staff extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The primary key associated with the table.
-     *
-     * @var string
+     * Explicitly map to the existing database table name.
+     * The database already has a `staffs` table.
      */
-    protected $primaryKey = 'user_id';
+    protected $table = 'staffs';
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +35,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**

@@ -42,7 +42,7 @@
                         @if($cartProducts->count() > 0)
                             @foreach($cartProducts as $cartProduct)
 						      <tr class="text-center">
-						        <td class="product-remove"><a href="{{ route('cart.product.delete', $cartProduct->pro_id) }}"><span class="icon-close"></span></a></td>
+						        <td class="product-remove"><a href="{{ route('cart.product.delete', $cartProduct->product_id) }}"><span class="icon-close"></span></a></td>
 						        
 						        <td class="image-prod"><div class="img" style="background-image:url({{ asset('assets/images/'.$cartProduct->image.'') }});"></div></td>
 						        
@@ -51,15 +51,25 @@
 						        	<p>{{ $cartProduct->description }}</p>
 						        </td>
 						        
-						        <td class="price">{{ $cartProduct->price }}</td>
+						        <td class="price">${{ $cartProduct->price }}</td>
 						        
 						        <td>
-									<div class="input-group mb-3">
-										<input disabled type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+									<div class="input-group mb-3 d-flex align-items-center justify-content-center" style="max-width: 130px; margin: 0 auto;">
+										<form method="POST" action="{{ route('cart.update.quantity', $cartProduct->cart_id) }}" style="display: inline;">
+											@csrf
+											<input type="hidden" name="action" value="decrease">
+											<button type="submit" class="btn btn-sm btn-outline-secondary" style="padding: 0.25rem 0.5rem;">-</button>
+										</form>
+										<input type="text" name="quantity" class="form-control text-center mx-2" value="{{ $cartProduct->quantity }}" readonly style="max-width: 50px;">
+										<form method="POST" action="{{ route('cart.update.quantity', $cartProduct->cart_id) }}" style="display: inline;">
+											@csrf
+											<input type="hidden" name="action" value="increase">
+											<button type="submit" class="btn btn-sm btn-outline-secondary" style="padding: 0.25rem 0.5rem;">+</button>
+										</form>
 									 </div>
 					            </td>
 						        
-						        <td class="total">${{ $cartProduct->price }}</td>
+						        <td class="total">${{ $cartProduct->price * $cartProduct->quantity }}</td>
 						      </tr><!-- END TR-->
                             @endforeach
                         @else
@@ -93,7 +103,7 @@
 						<form method="POST" action="{{ route('prepare.checkout') }}">
 							@csrf
 							<input name="price" type="hidden" value="{{ $totalPrice }}">
-    				    	<button type="submit" name="submit" class=" btn btn-primary py-3 px-4">Proceed to Checkout</button>
+    				    	<button type="submit" name="submit" class="btn btn-primary py-3 px-4" style="color: white !important;">Proceed to Checkout</button>
 						</form>
                     @else
                         <p class="text-center alert alert-success">you cannot checkout because you have no items in cart </p>

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.staff')
 
 @section('content')
 
@@ -51,8 +51,8 @@
                     <td>{{ $order->address }}</td>
                     <td>{{ $order->price }}</td>
                     <td>{{ $order->status }}</td>
-                    <td><a href="{{route('edit.order', $order->order_id)}}" class="btn btn-warning text-white text-center ">change</a></td>
-                    <td><a href="{{ route('delete.order', $order->order_id)}}" class="btn btn-danger  text-center ">delete</a></td>
+                    <td><a href="{{route('edit.order.staff', $order->order_id)}}" class="btn btn-warning text-white text-center ">change</a></td>
+                    <td><a href="{{ route('delete.order.staff', $order->order_id)}}" class="btn btn-danger  text-center ">delete</a></td>
                   </tr>
                 @endforeach
 

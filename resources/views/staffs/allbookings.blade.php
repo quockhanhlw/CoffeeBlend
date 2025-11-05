@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.staff')
 
 @section('content')
 
@@ -49,8 +49,8 @@
                     <td>{{ $booking->message }}</td>
                     <td>{{$booking->status}}</td>
                     <td>{{ $booking->created_at }}</td>
-                    <td><a href="{{ route('edit.booking', $booking->booking_id) }}" class="btn btn-warning text-white text-center ">change</a></td>
-                    <td><a href="{{ route('delete.booking', $booking->booking_id)}}" class="btn btn-danger  text-center ">delete</a></td>
+                    <td><a href="{{ route('edit.booking.staff', $booking->booking_id) }}" class="btn btn-warning text-white text-center ">change</a></td>
+                    <td><a href="{{ route('delete.booking.staff', $booking->booking_id)}}" class="btn btn-danger  text-center ">delete</a></td>
                   </tr>
                                       
                 @endforeach

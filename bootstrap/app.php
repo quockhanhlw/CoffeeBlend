@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
             'admin' => \App\Http\Middleware\AuthenticateAdmin::class,
 
+            // Ensure staff dashboard routes can use middleware('staff')
+            'staff' => \App\Http\Middleware\AuthenticateStaff::class,
+
             'check.for.auth' => \App\Http\Middleware\CheckForAuth::class,
         ]);
     })

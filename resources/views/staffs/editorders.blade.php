@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.staff')
 
 @section('content')
 
@@ -6,9 +6,9 @@
         <div class="col">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title mb-5 d-inline">Edit Booking</h5>
-              <p>Current Status is <b>{{ $booking->status }}</b></p>
-          <form method="POST" action="{{ route('update.booking', $booking->booking_id) }}" enctype="multipart/form-data">
+              <h5 class="card-title mb-5 d-inline">Edit Order</h5>
+              <p>Current Status is <b>{{ $order->status }}</b></p>
+          <form method="POST" action="{{ route('update.order.staff', $order->order_id) }}" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="form-outline mb-4 mt-4">
@@ -16,7 +16,7 @@
                   <select name="status" class="form-select  form-control" aria-label="Default select example">
                     <option selected>Choose Status</option>
                     <option value="Processing">Processing</option>
-                    <option value="Delivered">Booked</option>
+                    <option value="Delivered">Delivered</option>
                   </select>
                 </div>
 

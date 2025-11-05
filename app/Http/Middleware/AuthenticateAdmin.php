@@ -15,7 +15,7 @@ class AuthenticateAdmin
         // Auth::guard('admin')->check() sẽ kiểm tra session của admin
         if (!Auth::guard('admin')->check()) {
             // Nếu admin chưa đăng nhập, chuyển hướng về trang đăng nhập của admin
-            return redirect()->route('view.login')->with('error', 'Please log in to access the admin panel.');
+            return redirect()->route('view.login.admin')->with('error', 'Please log in to access the admin panel.');
         }
 
         // Nếu đã đăng nhập, cho phép đi tiếp

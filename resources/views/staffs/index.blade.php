@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.staff')
 
 @section('content')
 
@@ -39,7 +39,7 @@
             <div class="card-body">
               <h5 class="card-title">Staffs</h5>
 
-              <p class="card-text">number of staffs: {{ $StaffsCount }}</p>
+              <p class="card-text">number of staffs: {{ $staffsCount }}</p>
 
             </div>
           </div>

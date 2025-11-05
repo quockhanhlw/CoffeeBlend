@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.staff')
 
 @section('content')
 
@@ -12,7 +12,7 @@
                   {{ session('error') }}
                 </div>
               @endif
-              <form method="POST" class="p-auto" action="{{ route('check.login.admin') }}">
+              <form method="POST" class="p-auto" action="{{ route('check.login.staff') }}">
                   <!-- Email input -->
                    @csrf
                   <div class="form-outline mb-4">
