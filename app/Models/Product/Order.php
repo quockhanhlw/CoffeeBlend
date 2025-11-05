@@ -9,6 +9,13 @@ class Order extends Model
 {
     use HasFactory;
 
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'order_id';
+
     protected $table = 'orders';
 
     protected $fillable = [
@@ -24,4 +31,16 @@ class Order extends Model
         'user_id',
         "status"
     ];
+
+    // Relationship with OrderItems
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id', 'order_id');
+    }
+
+    // Relationship with User
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id', 'user_id');
+    }
 }

@@ -1,34 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\Admins;
+namespace App\Http\Controllers\Staffs;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product\Product;
 use App\Models\Product\Order;
 use App\Models\Product\Booking;
-use App\Models\Admin;
+use App\Models\Staff;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use App\Models\Staff;
 
 
-class AdminsController extends Controller
+class StaffsController extends Controller
 {
-    public function viewLoginAdmin()
+    public function viewLoginStaff()
     {
-        return view('admins.login');
+        return view('staffs.login');
     }
 
-    public function checkLoginAdmin(Request $request)
+    public function checkLoginStaff(Request $request)
     {
         $remember_me = $request->has('remember_me') ? true : false;
 
-        if (auth()->guard('admin')->attempt(['email' => $request->input("email"), 'password' => $request->input("password")], $remember_me)) {
+        if (auth()->guard('staff')->attempt(['email' => $request->input("email"), 'password' => $request->input("password")], $remember_me)) {
             
-            return redirect() -> route('admins.dashboard');
+            return redirect() -> route('staffs.dashboard');
         }
         return redirect()->back()->with(['error' => 'error logging in']);
     }
@@ -38,55 +37,28 @@ class AdminsController extends Controller
         $productsCount = Product::select()->count();
         $ordersCount = Order::select()->count();
         $bookingsCount = Booking::select()->count();
-        $StaffsCount = Staff::select()->count();
+        $staffsCount = Staff::select()->count();
 
-
-        return view('admins.index', compact('productsCount', 'ordersCount', 'bookingsCount', 'StaffsCount'));
+        return view('staffs.index', compact('productsCount', 'ordersCount', 'bookingsCount', 'staffsCount'));
     }
 
     public function displayAllStaffs()
     {
         $allStaffs = Staff::select()->orderBy('id', 'desc')->get();
 
-        // Render staff listing within the admin layout
-        return view('admins.allstaffs', compact('allStaffs'));
-    }
-
-    public function createAdmins()
-    {
-        return view('admins.createadmins');
+        return view('staffs.allstaffs', compact('allStaffs'));
     }
 
     public function createStaffs()
     {
-        return view('admins.createstaffs');
-    }
-
-    public function storeAdmins(Request $request)
-    {
-        Request()->validate([
-            'name' => 'required|max:40',
-            'email' => 'required|max:40',
-            'password' => 'required|max:40',
-        ]);
-
-        $storeAdmins = Admin::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        if($storeAdmins){
-            return Redirect::route('admins.dashboard')->with(['success' => 'Admin created successfully']);
-        }
-
+        return view('staffs.createstaffs');
     }
 
     public function storeStaffs(Request $request)
     {
         Request()->validate([
             'name' => 'required|max:40',
-            'email' => 'required|email|max:40|unique:staffs,email',
+            'email' => 'required|max:40',
             'password' => 'required|max:40',
         ]);
 
@@ -96,70 +68,71 @@ class AdminsController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if ($storeStaffs) {
-            return Redirect::route('all.staffs')->with(['success' => 'Staff created successfully']);
+        if($storeStaffs){
+            return Redirect::route('staff.all.staffs')->with(['success' => 'Staff created successfully']);
         }
+
     }
 
-    public function logoutAdmin(Request $request)
+    public function logoutStaff(Request $request)
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('staff')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('view.login.admin'); // Chuyển hướng về trang login của admin
+        return redirect()->route('view.login.staff'); // Chuyển hướng về trang login của staff
     }
 
-    public function displayAllOrders()
+    public function displayAllOrdersStaff()
     {
         $allOrders = Order::select()->orderBy('order_id', 'desc')->get();
 
-        return view('admins.allorders', compact('allOrders'));
+        return view('staffs.allorders', compact('allOrders'));
     }
 
-    public function editOrders($id)
+    public function editOrdersStaff($id)
     {
         $order = Order::find($id);
 
-        return view('admins.editorders', compact('order'));
+        return view('staffs.editorders', compact('order'));
     }
 
-    public function updateOrders(Request $request, $id)
+    public function updateOrdersStaff(Request $request, $id)
     {
         $order = Order::find($id);
 
         $order->update($request->all());
 
         if($order){
-            return Redirect::route('all.orders')->with(['update' => 'Order status updated successfully']);
+            return Redirect::route('all.orders.staff')->with(['update' => 'Order status updated successfully']);
         }
     }
 
-    public function deleteOrders($id)
+    public function deleteOrdersStaff($id)
     {
         $order = Order::find($id);
         $order->delete();
 
         if($order){
-            return Redirect::route('all.orders')->with(['delete' => 'Order deleted successfully']);
+            return Redirect::route('all.orders.staff')->with(['delete' => 'Order deleted successfully']);
         }
     }
 
-    public function displayAllProducts()
+    public function displayAllProductsStaff()
     {
         $products = Product::select()->orderBy('product_id', 'desc')->paginate(10);
 
-        return view('admins.allproducts', compact('products'));
+        return view('staffs.allproducts', compact('products'));
     }
 
-    public function createProducts()
+    public function createProductsStaff()
     {
-        return view('admins.createproducts');
+        return view('staffs.createproducts');
     }
 
-    public function storeProducts(Request $request)
+    public function storeProductsStaff(Request $request)
     {
         Request()->validate([
             'name' => 'required|max:100',
@@ -183,11 +156,11 @@ class AdminsController extends Controller
         ]);
 
         if($storeProducts){
-            return Redirect::route('all.products')->with(['success' => 'Product created successfully']);
+            return Redirect::route('all.products.staff')->with(['success' => 'Product created successfully']);
         }
     }
 
-    public function deleteProducts(Request $request)
+    public function deleteProductsStaff(Request $request)
     {
         $product = Product::find($request->id);
 
@@ -199,17 +172,17 @@ class AdminsController extends Controller
         $product->delete();
 
         if($product){
-            return Redirect::route('all.products')->with(['delete' => 'Product deleted successfully']);
+            return Redirect::route('all.products.staff')->with(['delete' => 'Product deleted successfully']);
         }
     }
 
-    public function editProducts($id)
+    public function editProductsStaff($id)
     {
         $product = Product::find($id);
-        return view('admins.editproducts', compact('product'));
+        return view('staffs.editproducts', compact('product'));
     }
 
-    public function updateProducts(Request $request, $id)
+    public function updateProductsStaff(Request $request, $id)
     {
         $product = Product::find($id);
 
@@ -234,41 +207,41 @@ class AdminsController extends Controller
         $product->quantity = $request->quantity ?? 0;
         $product->save();
 
-        return Redirect::route('all.products')->with(['success' => 'Product updated successfully']);
+        return Redirect::route('all.products.staff')->with(['success' => 'Product updated successfully']);
     }
 
-    public function displayAllBookings()
+    public function displayAllBookingsStaff()
     {
         $bookings = Booking::select()->orderBy('booking_id', 'desc')->get();
 
-        return view('admins.allbookings', compact('bookings'));
+        return view('staffs.allbookings', compact('bookings'));
     }
 
-    public function editBookings($id)
+    public function editBookingsStaff($id)
     {
         $booking = Booking::find($id);
 
-        return view('admins.editbookings', compact('booking'));
+        return view('staffs.editbookings', compact('booking'));
     }
 
-    public function updateBookings(Request $request, $id)
+    public function updateBookingsStaff(Request $request, $id)
     {
         $booking = Booking::find($id);
 
         $booking->update($request->all());
 
         if($booking){
-            return Redirect::route('all.bookings')->with(['update' => 'Booking status updated successfully']);
+            return Redirect::route('all.bookings.staff')->with(['update' => 'Booking status updated successfully']);
         }
     }
 
-    public function deleteBookings($id)
+    public function deleteBookingsStaff($id)
     {
         $booking = Booking::find($id);
         $booking->delete();
 
         if($booking){
-            return Redirect::route('all.bookings')->with(['delete' => 'Booking deleted successfully']);
+            return Redirect::route('all.bookings.staff')->with(['delete' => 'Booking deleted successfully']);
         }
     }
 }

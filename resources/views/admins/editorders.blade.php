@@ -8,7 +8,7 @@
             <div class="card-body">
               <h5 class="card-title mb-5 d-inline">Edit Order</h5>
               <p>Current Status is <b>{{ $order->status }}</b></p>
-          <form method="POST" action="{{ route('update.order', $order->id) }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('update.order', $order->order_id) }}" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="form-outline mb-4 mt-4">

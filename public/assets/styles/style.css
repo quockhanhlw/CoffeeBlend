@@ -1,9 +1,118 @@
-.body{background:#f9f9f9;}
-#wrapper{padding:90px 15px;}
+/* CoffeeBlend Admin/Staff modern LIGHT theme */
+:root {
+	--cb-bg: #f7f8fb;
+	--cb-surface: #ffffff;
+	--cb-surface-2: #f3f5f9;
+	--cb-border: #e6e9ef;
+	--cb-primary: #10b981; /* emerald */
+	--cb-primary-600: #0fb07a;
+	--cb-primary-700: #0a9668;
+	--cb-muted: #6b7280;
+	--cb-text: #0f172a;
+	--cb-shadow: 0 8px 24px rgba(15, 23, 42, .08);
+	--cb-radius: 14px;
+}
+
+/* Optional dark variant (not used by default) */
+.theme-dark {
+	--cb-bg: #0f1217;
+	--cb-surface: #151a21;
+	--cb-surface-2: #1b2230;
+	--cb-border: #262c36;
+	--cb-primary: #6ee7b7;
+	--cb-primary-600: #34d399;
+	--cb-primary-700: #10b981;
+	--cb-muted: #9aa4b2;
+	--cb-text: #e5e7eb;
+	--cb-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+
+html, body { height: 100%; }
+body {
+	background:
+		radial-gradient(600px 300px at -10% -10%, rgba(16,185,129,.06), transparent 40%),
+		radial-gradient(800px 400px at 120% -20%, rgba(14,165,233,.06), transparent 45%),
+		var(--cb-bg);
+	color: var(--cb-text);
+	font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+#wrapper{padding:96px 20px;}
 .navbar-expand-lg .navbar-nav.side-nav{flex-direction: column;}
-.card{margin-bottom: 15px; border-radius:0; box-shadow: 0 3px 5px rgba(0,0,0,.1); }
-.header-top{box-shadow: 0 3px 5px rgba(0,0,0,.1)}
+
+/* Topbar */
+.header-top{
+	background: linear-gradient(90deg, var(--cb-surface), var(--cb-surface-2));
+	box-shadow: 0 8px 24px rgba(15,23,42,.08);
+	border-bottom: 1px solid var(--cb-border);
+}
+
+/* Top navbar links and brand in light theme */
+.navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link{
+	color: var(--cb-text);
+}
+.navbar-light .navbar-nav .nav-link:hover{
+	color: var(--cb-primary);
+}
+
+/* Sidebar */
+.navbar-nav.side-nav{
+	background: var(--cb-surface);
+	border-right: 1px solid var(--cb-border);
+	box-shadow: none;
+}
+.navbar-nav.side-nav .nav-item .nav-link{
+	color: var(--cb-muted);
+	padding: 14px 20px;
+	font-weight: 600;
+	transition: color .2s ease, background .2s ease, transform .1s ease;
+}
+.navbar-nav.side-nav .nav-item .nav-link:hover{
+	color: var(--cb-text);
+	background: rgba(16,185,129,.08);
+}
+.navbar-nav.side-nav .nav-item .nav-link.active{
+	color: var(--cb-text);
+	background: rgba(16,185,129,.15);
+	border-left: 3px solid var(--cb-primary);
+	border-radius: 0;
+}
+
+/* Cards */
+.card{
+	margin-bottom: 20px;
+	border-radius: var(--cb-radius);
+	background: var(--cb-surface);
+	border: 1px solid var(--cb-border);
+	box-shadow: var(--cb-shadow);
+	overflow: hidden;
+}
+.card .card-title{ color: var(--cb-text); font-weight: 700; }
+.card .card-body{ color: var(--cb-muted); }
+
+/* Tables */
+table.table{ color: var(--cb-text); background: var(--cb-surface); }
+table.table thead th{ border-color: var(--cb-border); color: var(--cb-muted); font-weight: 700; background: var(--cb-surface-2); }
+table.table tbody td, table.table tbody th{ border-color: var(--cb-border); }
+table.table tbody tr:hover{ background: rgba(2,6,23,.02); }
+
+/* Buttons */
+.btn-primary{
+	background: linear-gradient(180deg, var(--cb-primary), var(--cb-primary-600));
+	border-color: var(--cb-primary-700);
+	color: #ffffff;
+	font-weight: 700;
+	box-shadow: 0 8px 16px rgba(16,185,129,.18);
+}
+.btn-primary:hover{ filter: brightness(1.03); }
+
+/* Brand spacing */
+.brand-logo{ letter-spacing: .08em; }
+.brand-logo .logo-top{ color: var(--cb-text); }
+.brand-logo .logo-bottom{ color: var(--cb-primary); }
+
+/* Content container spacing on desktop */
 @media(min-width:992px) {
-#wrapper{margin-left: 200px;padding: 90px 15px 15px;}
-.navbar-nav.side-nav{background: #585f66;box-shadow: 2px 1px 2px rgba(0,0,0,.1);position:fixed;top:56px;flex-direction: column!important;left:0;width:200px;overflow-y:auto;bottom:0;overflow-x:hidden;padding-bottom:40px}
+	#wrapper{margin-left: 220px;padding: 96px 24px 24px;}
+	.navbar-nav.side-nav{position:fixed;top:56px;flex-direction: column!important;left:0;width:220px;overflow-y:auto;bottom:0;overflow-x:hidden;padding-bottom:40px}
 }

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.staff')
 
 @section('content')
 
@@ -8,7 +8,7 @@
             <div class="card-body">
               <h5 class="card-title mb-5 d-inline">Edit Booking</h5>
               <p>Current Status is <b>{{ $booking->status }}</b></p>
-          <form method="POST" action="{{ route('update.booking', $booking->booking_id) }}" enctype="multipart/form-data">
+          <form method="POST" action="{{ route('update.booking.staff', $booking->booking_id) }}" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="form-outline mb-4 mt-4">

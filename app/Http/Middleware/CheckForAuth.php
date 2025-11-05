@@ -18,12 +18,16 @@ class CheckForAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->url('admin/login') ) {
-            if(isset(Auth::guard('admin')->user()->name)) {
-                return redirect()->route('admins.dashboard');
-            } 
+        // If already authenticated for a specific guard, prevent accessing its login page
+        if ($request->is('admin/login') && Auth::guard('admin')->check()) {
+            return redirect()->route('admins.dashboard');
+        }
+
+        if ($request->is('staff/login') && Auth::guard('staff')->check()) {
+            return redirect()->route('staffs.dashboard');
         }
 
         return $next($request);
+
     }
 }

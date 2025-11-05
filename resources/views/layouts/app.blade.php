@@ -32,7 +32,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/ionicons.min.css') }}">
 
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/jquery.timepicker.css') }}">
+  <!-- Removed local jquery.timepicker.css to avoid conflicts with CDN version below -->
 
     
         <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
@@ -84,6 +84,21 @@
             }
         </style>
 
+    <!-- Ensure timepicker dropdown appears above booking form and other elements -->
+    <style>
+      /* jquery.timepicker uses .ui-timepicker-wrapper; its stylesheet sets z-index:10001.
+         Some page containers create stacking contexts or use overflow which clips the dropdown.
+         Make the wrapper fixed and give it a very high z-index so the list displays on top. */
+      .ui-timepicker-wrapper {
+        position: fixed !important;
+        z-index: 999999 !important;
+      }
+      /* Also ensure inner list inherits the stacking context */
+      .ui-timepicker-list {
+        z-index: 999999 !important;
+      }
+    </style>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -102,17 +117,9 @@
 	          <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contact</a></li>
 	          <li class="nav-item cart"><a href="{{ route('cart') }}" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
-                @guest
-                    @if (Route::has('login'))
-		            <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
-                    @endif
-
-                    @if (Route::has('register'))
-		            <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
-                    @endif
-                @else
+                @auth
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
 
@@ -126,7 +133,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                Logout
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -134,7 +141,15 @@
                             </form>
                         </div>
                     </li>
-                @endguest
+                @else
+                    @if (Route::has('login'))
+		            <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">LOGIN</a></li>
+                    @endif
+
+                    @if (Route::has('register'))
+		            <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">REGISTER</a></li>
+                    @endif
+                @endauth
 
 	        </ul>
 	      </div>
@@ -161,7 +176,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 mb-5 mb-md-5">
+          <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Recent Blog</h2>
               <div class="block-21 mb-4 d-flex">
@@ -188,8 +203,8 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-2 col-md-6 mb-5 mb-md-5">
-             <div class="ftco-footer-widget mb-4 ml-md-4">
+       <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
+         <div class="ftco-footer-widget mb-4 ml-md-4">
               <h2 class="ftco-heading-2">Services</h2>
               <ul class="list-unstyled">
                 <li><a href="#" class="py-2 d-block">Cooked</a></li>
@@ -236,5 +251,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="{{ asset('assets/js/google-map.js') }}"></script>
         <script src="{{ asset('assets/js/main.js') }}"></script>
+        
+        @stack('scripts')
     </body>
 </html>

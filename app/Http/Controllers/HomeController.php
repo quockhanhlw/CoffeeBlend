@@ -21,9 +21,9 @@ class HomeController extends Controller
 
     public function index()
     {
-        $products = Product::select()->orderBy('id', 'desc')->take('4')->get();
+        $products = Product::select()->orderBy('product_id', 'desc')->take('4')->get();
 
-        $reviews = Review::select()->orderBy('id', 'desc')->take('4')->get();
+        $reviews = Review::select()->orderBy('review_id', 'desc')->take('4')->get();
 
         return view('home', compact('products', 'reviews'));
     }
@@ -35,7 +35,7 @@ class HomeController extends Controller
 
     public function about()
     {
-        $reviews = Review::select()->orderBy('id', 'desc')->take('5')->get();
+        $reviews = Review::select()->orderBy('review_id', 'desc')->take('5')->get();
 
         return view('pages.about', compact('reviews'));
     }
