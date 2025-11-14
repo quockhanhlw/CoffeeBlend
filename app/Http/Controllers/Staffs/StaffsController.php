@@ -39,7 +39,31 @@ class StaffsController extends Controller
         $bookingsCount = Booking::select()->count();
         $staffsCount = Staff::select()->count();
 
-        return view('staffs.index', compact('productsCount', 'ordersCount', 'bookingsCount', 'staffsCount'));
+        // Get orders by month for the current year
+        $ordersPerMonth = Order::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereYear('created_at', date('Y'))
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('count', 'month')
+            ->toArray();
+
+        // Get bookings by month for the current year
+        $bookingsPerMonth = Booking::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereYear('created_at', date('Y'))
+            ->groupBy('month')
+            ->orderBy('month')
+            ->pluck('count', 'month')
+            ->toArray();
+
+        // Fill in missing months with 0
+        $ordersData = [];
+        $bookingsData = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $ordersData[] = $ordersPerMonth[$i] ?? 0;
+            $bookingsData[] = $bookingsPerMonth[$i] ?? 0;
+        }
+
+        return view('staffs.index', compact('productsCount', 'ordersCount', 'bookingsCount', 'staffsCount', 'ordersData', 'bookingsData'));
     }
 
     public function displayAllStaffs()

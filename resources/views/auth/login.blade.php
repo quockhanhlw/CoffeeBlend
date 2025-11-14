@@ -38,7 +38,12 @@
 	              <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Password">Password</label>
-	                    <input id="password" type="password" class="form-control" @error('password') is-invalid @enderror name="password" required autocomplete="current-password" placeholder="Password">
+	                    <div style="position: relative;">
+	                        <input id="password" type="password" class="form-control" @error('password') is-invalid @enderror name="password" required autocomplete="current-password" placeholder="Password" style="padding-right: 45px;">
+	                        <button type="button" onclick="togglePassword('password')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #c49b63; font-size: 18px;">
+	                            <i class="fas fa-eye" id="password-icon"></i>
+	                        </button>
+	                    </div>
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -62,6 +67,24 @@
         </div>
       </div>
     </section> <!-- .section -->
+
+    <script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(inputId + '-icon');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+    </script>
+
   {{--   <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

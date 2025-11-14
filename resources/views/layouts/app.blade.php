@@ -97,6 +97,87 @@
       .ui-timepicker-list {
         z-index: 999999 !important;
       }
+
+      /* Footer Layout Improvements */
+      .ftco-footer .ftco-footer-widget {
+        padding: 0 15px;
+      }
+      
+      .ftco-footer .row.mb-5 {
+        margin-left: -15px;
+        margin-right: -15px;
+      }
+      
+      .ftco-footer .col-lg-3 {
+        padding-left: 15px;
+        padding-right: 15px;
+        display: flex;
+        align-items: stretch;
+      }
+      
+      .ftco-footer .ftco-footer-widget {
+        width: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .ftco-footer .ftco-footer-widget h2 {
+        margin-bottom: 25px;
+        font-size: 18px;
+        line-height: 1.2;
+      }
+      
+      .ftco-footer .ftco-footer-widget p,
+      .ftco-footer .ftco-footer-widget ul {
+        flex-grow: 1;
+      }
+      
+      .ftco-footer .ftco-footer-widget ul.list-unstyled li {
+        margin-bottom: 8px;
+      }
+      
+      .ftco-footer .ftco-footer-widget ul.list-unstyled li a {
+        padding: 5px 0;
+        transition: color 0.3s ease;
+      }
+      
+      .ftco-footer .ftco-footer-widget ul.list-unstyled li a:hover {
+        color: #c49b63;
+        text-decoration: none;
+      }
+      
+      .ftco-footer .block-23 ul li {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: flex-start;
+      }
+      
+      .ftco-footer .block-23 ul li .icon {
+        margin-right: 15px;
+        margin-top: 3px;
+        color: #c49b63;
+      }
+      
+      .ftco-footer .block-23 ul li .text {
+        flex-grow: 1;
+        line-height: 1.5;
+      }
+      
+      .ftco-footer-social {
+        margin-top: auto;
+        padding-top: 20px;
+      }
+      
+      @media (max-width: 991px) {
+        .ftco-footer .col-lg-3 {
+          margin-bottom: 30px;
+        }
+        
+        .ftco-footer .ftco-footer-widget {
+          min-height: auto;
+        }
+      }
     </style>
 
         <!-- Scripts -->
@@ -167,64 +248,65 @@
         <div class="row mb-5">
           <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">About Us</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              <h2 class="ftco-heading-2"><a href="{{ route('about') }}" style="color: #c49b63; text-decoration: none;">About Us</a></h2>
+              <p>CoffeeBlend is more than just our name; it's our promise. A living testament to our commitment to quality, community, and the perfect cup of coffee.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft">
+                <li class="ftco-animate"><a href="https://github.com/quockhanhlw" target="_blank" title="GitHub"><span class="icon-github"></span></a></li>
+                <li class="ftco-animate"><a href="https://web.facebook.com/nguyen.van.anh.435199" target="_blank" title="Facebook"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="https://www.instagram.com/reallqk__/" target="_blank" title="Instagram"><span class="icon-instagram"></span></a></li>
               </ul>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">Recent Blog</h2>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-              <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-                <div class="text">
-                  <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
-                  <div class="meta">
-                    <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
-                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-       <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
-         <div class="ftco-footer-widget mb-4 ml-md-4">
-              <h2 class="ftco-heading-2">Services</h2>
+              <h2 class="ftco-heading-2">Coffee</h2>
               <ul class="list-unstyled">
-                <li><a href="#" class="py-2 d-block">Cooked</a></li>
-                <li><a href="#" class="py-2 d-block">Deliver</a></li>
-                <li><a href="#" class="py-2 d-block">Quality Foods</a></li>
-                <li><a href="#" class="py-2 d-block">Mixed</a></li>
+                <li><a href="{{ route('products.menu') }}" class="py-2 d-block">Menu</a></li>
+                <li><a href="{{ route('services') }}" class="py-2 d-block">Services</a></li>
+                <li><a href="{{ route('about') }}" class="py-2 d-block">About Us</a></li>
+                <li><a href="{{ route('contact') }}" class="py-2 d-block">Contact</a></li>
               </ul>
             </div>
           </div>
           <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
             <div class="ftco-footer-widget mb-4">
-            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+              <h2 class="ftco-heading-2">Our Specialties</h2>
+              <ul class="list-unstyled">
+                <li><a href="{{ route('products.menu') }}" class="py-2 d-block">Specialty Coffee</a></li>
+                <li><a href="{{ route('products.menu') }}" class="py-2 d-block">Fresh Pastries</a></li>
+                <li><a href="{{ route('products.menu') }}" class="py-2 d-block">Artisan Drinks</a></li>
+                <li><a href="{{ route('products.menu') }}" class="py-2 d-block">Light Meals</a></li>
+                <li><a href="{{ url('/') }}" class="py-2 d-block">Table Booking</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Contact Info</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">12 Chua Boc, Quang Trung, Dong Da, Ha Noi, Viet Nam</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">034 527 6156</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">quockhanhlw294@gmail.com</span></a></li>
+	                <li>
+	                  <span class="icon icon-map-marker"></span>
+	                  <span class="text">12 Chua Boc, Quang Trung<br>Dong Da, Ha Noi, Viet Nam</span>
+	                </li>
+	                <li>
+	                  <span class="icon icon-phone"></span>
+	                  <span class="text"><a href="tel:0345276156" style="color: inherit;">034 527 6156</a></span>
+	                </li>
+	                <li>
+	                  <span class="icon icon-envelope"></span>
+	                  <span class="text"><a href="mailto:quockhanhlw294@gmail.com" style="color: inherit;">quockhanhlw294@gmail.com</a></span>
+	                </li>
 	              </ul>
 	            </div>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p style="margin: 0; padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.1);">
+              &copy; {{ date('Y') }} CoffeeBlend. All rights reserved. | Designed with <span style="color: #c49b63;">♥</span> by Khanh Luu
+            </p>
           </div>
         </div>
       </div>

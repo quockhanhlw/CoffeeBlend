@@ -5,6 +5,139 @@
   z-index: 3000 !important;
 }
 
+/* Style for founders/staff section */
+.staff {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  margin-bottom: 40px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  height: 400px;
+}
+
+.staff:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+.staff .img-wrap {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.staff .img {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.4s ease;
+}
+
+.staff:hover .img {
+  transform: scale(1.05);
+}
+
+.staff .text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 40px 20px 25px 20px;
+  color: white;
+  transform: translateY(100%);
+  transition: all 0.4s ease;
+  opacity: 0;
+}
+
+.staff:hover .text {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.staff .text h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 8px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.staff .text .position {
+  color: #c49b63;
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.staff .text .faded p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Quick info overlay that shows on hover */
+.staff .quick-info {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.staff:hover .quick-info {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.staff .quick-info h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.staff .quick-info .role {
+  color: #c49b63;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Style for history section */
+.history-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.history-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-5px);
+}
+
 /* Style for time select dropdown */
 .input-wrap select.form-control {
   padding-left: 35px;
