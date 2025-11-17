@@ -5,8 +5,8 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordCodeController;
 use App\Http\Controllers\Auth\PasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
@@ -22,17 +22,25 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    // Custom 6-digit code reset flow
+    Route::get('forgot-password', [PasswordCodeController::class, 'showEmailForm'])
         ->name('password.request');
+    Route::post('forgot-password', [PasswordCodeController::class, 'sendCode'])
+        ->name('password.code.send');
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->name('password.email');
+    Route::get('verify-reset-code', [PasswordCodeController::class, 'showCodeForm'])
+        ->name('password.code.verify');
+    Route::post('verify-reset-code', [PasswordCodeController::class, 'verifyCode'])
+        ->name('password.code.verify.submit');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->name('password.reset');
+    Route::get('reset-password-code', [PasswordCodeController::class, 'showNewPasswordForm'])
+        ->name('password.code.reset');
+    Route::post('reset-password-code', [PasswordCodeController::class, 'resetPassword'])
+        ->name('password.code.update');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.store');
+    // Keep default token-based endpoints (optional)
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+    Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 });
 
 Route::middleware('auth')->group(function () {

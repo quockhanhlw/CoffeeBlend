@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Staffs;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product\Product;
-use App\Models\Product\Order;
 use App\Models\Product\Booking;
+use App\Models\Product\Order;
+use App\Models\Product\Product;
 use App\Models\Staff;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class StaffsController extends Controller
 {
@@ -25,10 +24,11 @@ class StaffsController extends Controller
     {
         $remember_me = $request->has('remember_me') ? true : false;
 
-        if (auth()->guard('staff')->attempt(['email' => $request->input("email"), 'password' => $request->input("password")], $remember_me)) {
-            
-            return redirect() -> route('staffs.dashboard');
+        if (auth()->guard('staff')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)) {
+
+            return redirect()->route('staffs.dashboard');
         }
+
         return redirect()->back()->with(['error' => 'error logging in']);
     }
 
@@ -92,7 +92,7 @@ class StaffsController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if($storeStaffs){
+        if ($storeStaffs) {
             return Redirect::route('staff.all.staffs')->with(['success' => 'Staff created successfully']);
         }
 
@@ -129,7 +129,7 @@ class StaffsController extends Controller
 
         $order->update($request->all());
 
-        if($order){
+        if ($order) {
             return Redirect::route('all.orders.staff')->with(['update' => 'Order status updated successfully']);
         }
     }
@@ -139,7 +139,7 @@ class StaffsController extends Controller
         $order = Order::find($id);
         $order->delete();
 
-        if($order){
+        if ($order) {
             return Redirect::route('all.orders.staff')->with(['delete' => 'Order deleted successfully']);
         }
     }
@@ -179,7 +179,7 @@ class StaffsController extends Controller
             'quantity' => $request->quantity ?? 0,
         ]);
 
-        if($storeProducts){
+        if ($storeProducts) {
             return Redirect::route('all.products.staff')->with(['success' => 'Product created successfully']);
         }
     }
@@ -188,14 +188,14 @@ class StaffsController extends Controller
     {
         $product = Product::find($request->id);
 
-        if(File::exists(public_path('assets/images/' . $product->product_image))){
-            File::delete(public_path('assets/images/' . $product->product_image));
-        }else{
-            //dd('File does not exists.');
+        if (File::exists(public_path('assets/images/'.$product->product_image))) {
+            File::delete(public_path('assets/images/'.$product->product_image));
+        } else {
+            // dd('File does not exists.');
         }
         $product->delete();
 
-        if($product){
+        if ($product) {
             return Redirect::route('all.products.staff')->with(['delete' => 'Product deleted successfully']);
         }
     }
@@ -203,6 +203,7 @@ class StaffsController extends Controller
     public function editProductsStaff($id)
     {
         $product = Product::find($id);
+
         return view('staffs.editproducts', compact('product'));
     }
 
@@ -211,14 +212,14 @@ class StaffsController extends Controller
         $product = Product::find($id);
 
         // Handle image upload if new image is provided
-        if($request->hasFile('product_image')) {
+        if ($request->hasFile('product_image')) {
             // Delete old image
-            if(File::exists(public_path('assets/images/' . $product->product_image))){
-                File::delete(public_path('assets/images/' . $product->product_image));
+            if (File::exists(public_path('assets/images/'.$product->product_image))) {
+                File::delete(public_path('assets/images/'.$product->product_image));
             }
 
             // Upload new image
-            $myimage = time() . '.' . $request->product_image->extension();
+            $myimage = time().'.'.$request->product_image->extension();
             $request->product_image->move(public_path('assets/images'), $myimage);
             $product->product_image = $myimage;
         }
@@ -254,7 +255,7 @@ class StaffsController extends Controller
 
         $booking->update($request->all());
 
-        if($booking){
+        if ($booking) {
             return Redirect::route('all.bookings.staff')->with(['update' => 'Booking status updated successfully']);
         }
     }
@@ -264,7 +265,7 @@ class StaffsController extends Controller
         $booking = Booking::find($id);
         $booking->delete();
 
-        if($booking){
+        if ($booking) {
             return Redirect::route('all.bookings.staff')->with(['delete' => 'Booking deleted successfully']);
         }
     }

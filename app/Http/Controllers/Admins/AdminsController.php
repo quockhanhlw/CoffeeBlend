@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Admins;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Product\Product;
-use App\Models\Product\Order;
-use App\Models\Product\Booking;
 use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Product\Booking;
+use App\Models\Product\Order;
+use App\Models\Product\Product;
+use App\Models\Staff;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use App\Models\Staff;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminsController extends Controller
 {
@@ -26,10 +25,11 @@ class AdminsController extends Controller
     {
         $remember_me = $request->has('remember_me') ? true : false;
 
-        if (auth()->guard('admin')->attempt(['email' => $request->input("email"), 'password' => $request->input("password")], $remember_me)) {
-            
-            return redirect() -> route('admins.dashboard');
+        if (auth()->guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)) {
+
+            return redirect()->route('admins.dashboard');
         }
+
         return redirect()->back()->with(['error' => 'error logging in']);
     }
 
@@ -99,7 +99,7 @@ class AdminsController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if($storeAdmins){
+        if ($storeAdmins) {
             return Redirect::route('admins.dashboard')->with(['success' => 'Admin created successfully']);
         }
 
@@ -155,7 +155,7 @@ class AdminsController extends Controller
 
         $order->update($request->all());
 
-        if($order){
+        if ($order) {
             return Redirect::route('all.orders')->with(['update' => 'Order status updated successfully']);
         }
     }
@@ -165,7 +165,7 @@ class AdminsController extends Controller
         $order = Order::find($id);
         $order->delete();
 
-        if($order){
+        if ($order) {
             return Redirect::route('all.orders')->with(['delete' => 'Order deleted successfully']);
         }
     }
@@ -185,16 +185,21 @@ class AdminsController extends Controller
     public function storeProducts(Request $request)
     {
         Request()->validate([
-            'name' => 'required|max:100',
+            'product_name' => 'required|max:100',
             'price' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'required',
             'type' => 'required',
         ]);
 
-        $destinationPath = 'assets/images/';
-        $myimage = $request->product_image->getClientOriginalName();
-        $request->product_image->move(public_path($destinationPath), $myimage);
+        $destinationPath = public_path('assets/images');
+        if (! is_dir($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
+        }
+
+        // Use timestamp-based filename to avoid collisions
+        $myimage = time().'.'.$request->product_image->extension();
+        $request->product_image->move($destinationPath, $myimage);
 
         $storeProducts = Product::create([
             'product_name' => $request->product_name,
@@ -205,7 +210,7 @@ class AdminsController extends Controller
             'quantity' => $request->quantity ?? 0,
         ]);
 
-        if($storeProducts){
+        if ($storeProducts) {
             return Redirect::route('all.products')->with(['success' => 'Product created successfully']);
         }
     }
@@ -214,14 +219,14 @@ class AdminsController extends Controller
     {
         $product = Product::find($request->id);
 
-        if(File::exists(public_path('assets/images/' . $product->product_image))){
-            File::delete(public_path('assets/images/' . $product->product_image));
-        }else{
-            //dd('File does not exists.');
+        if (File::exists(public_path('assets/images/'.$product->product_image))) {
+            File::delete(public_path('assets/images/'.$product->product_image));
+        } else {
+            // dd('File does not exists.');
         }
         $product->delete();
 
-        if($product){
+        if ($product) {
             return Redirect::route('all.products')->with(['delete' => 'Product deleted successfully']);
         }
     }
@@ -229,6 +234,7 @@ class AdminsController extends Controller
     public function editProducts($id)
     {
         $product = Product::find($id);
+
         return view('admins.editproducts', compact('product'));
     }
 
@@ -237,14 +243,14 @@ class AdminsController extends Controller
         $product = Product::find($id);
 
         // Handle image upload if new image is provided
-        if($request->hasFile('product_image')) {
+        if ($request->hasFile('product_image')) {
             // Delete old image
-            if(File::exists(public_path('assets/images/' . $product->product_image))){
-                File::delete(public_path('assets/images/' . $product->product_image));
+            if (File::exists(public_path('assets/images/'.$product->product_image))) {
+                File::delete(public_path('assets/images/'.$product->product_image));
             }
 
             // Upload new image
-            $myimage = time() . '.' . $request->product_image->extension();
+            $myimage = time().'.'.$request->product_image->extension();
             $request->product_image->move(public_path('assets/images'), $myimage);
             $product->product_image = $myimage;
         }
@@ -280,7 +286,7 @@ class AdminsController extends Controller
 
         $booking->update($request->all());
 
-        if($booking){
+        if ($booking) {
             return Redirect::route('all.bookings')->with(['update' => 'Booking status updated successfully']);
         }
     }
@@ -290,7 +296,7 @@ class AdminsController extends Controller
         $booking = Booking::find($id);
         $booking->delete();
 
-        if($booking){
+        if ($booking) {
             return Redirect::route('all.bookings')->with(['delete' => 'Booking deleted successfully']);
         }
     }

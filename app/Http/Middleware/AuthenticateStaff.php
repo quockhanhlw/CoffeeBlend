@@ -12,7 +12,7 @@ class AuthenticateStaff
     public function handle(Request $request, Closure $next): Response
     {
         // Ensure the current session is authenticated with the 'staff' guard
-        if (!Auth::guard('staff')->check()) {
+        if (! Auth::guard('staff')->check()) {
             return redirect()->route('view.login.staff')->with('error', 'Please log in to access the staff panel.');
         }
 

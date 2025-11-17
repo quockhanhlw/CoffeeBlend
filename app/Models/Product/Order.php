@@ -29,7 +29,7 @@ class Order extends Model
         'email',
         'price',
         'user_id',
-        "status"
+        'status',
     ];
 
     // Relationship with OrderItems

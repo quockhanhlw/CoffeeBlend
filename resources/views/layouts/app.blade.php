@@ -8,6 +8,14 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+  <!-- Favicon / App Icons -->
+  <!-- Place your icon files in public/assets/images/ with these names -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/latte-art.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/latte-art.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/latte-art.png') }}">
+  <!-- Fallback .ico for older browsers -->
+  <link rel="shortcut icon" href="{{ asset('assets/images/latte-art.png') }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -38,6 +46,8 @@
         <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/icomoon.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  <!-- Font Awesome for password toggle icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-DlKwxP6p6hVWD7pX+9aZB1Gd3uM+psu1qPCjRRiQcFpCjX6ztKwxKzjXjHk3QzJbZQpYpU6Rp+4LwYlFpd6jeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Custom CSS to fix navbar -->
         <style>
@@ -191,7 +201,7 @@
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 	      <div class="collapse navbar-collapse show" id="ftco-nav">
-	        <ul class="navbar-nav ms-auto">
+	        <ul class="navbar-nav ms-auto align-items-center">
 	          <li class="nav-item active"><a href="{{ url('/') }}" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="{{ route('products.menu') }}" class="nav-link">Menu</a></li>
 	          <li class="nav-item"><a href="{{ route('services') }}" class="nav-link">Services</a></li>

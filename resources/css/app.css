@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* CoffeeBlend custom form styles (dark theme friendly) */
+/* Inputs/selects/textarea in billing form will use dark background with clear text */
+.billing-form .form-control {
+	background: #0b0b0b !important; /* dark input background */
+	color: #f3f4f6 !important;     /* light text */
+	border: 1px solid #2b2b2b !important;
+}
+.billing-form textarea.form-control {
+	background: #0b0b0b !important;
+	color: #f3f4f6 !important;
+}
+.billing-form select.form-control {
+	background: #0b0b0b !important;
+	color: #f3f4f6 !important;
+}
+.billing-form label {
+	color: #ffffff !important;
+	font-weight: 600;
+}
+.billing-form .form-control::placeholder {
+	color: #9ca3af !important; /* muted placeholder */
+}
+
+/* Select2 dark styling overrides */
+
+
+/* Limit native select dropdown max height fallback */
+select.form-control { max-height: 260px; }
+

@@ -49,6 +49,28 @@
 
     <section class="ftco-menu mb-5 pb-5">
     	<div class="container">
+			<div class="row mb-4">
+				<div class="col-md-8 mx-auto">
+					<div class="position-relative" style="position:relative;">
+						<form method="GET" action="{{ route('products.menu') }}" class="d-flex" style="gap:10px;">
+							<input id="menu-search-input" type="text" name="q" value="{{ $q ?? '' }}" class="form-control" placeholder="Search products..." autocomplete="off" style="background:#0b0b0b; color:#fff; border:1px solid #2b2b2b;">
+							<button class="btn btn-primary" type="submit">Search</button>
+							@if(($q ?? '') !== '')
+								<a href="{{ route('products.menu') }}" class="btn btn-secondary">Clear</a>
+							@endif
+						</form>
+						<!-- Suggestions dropdown -->
+						<div id="menu-search-suggestions" style="display:none; position:absolute; top:100%; left:0; right:0; background:#0b0b0b; border:1px solid #2b2b2b; border-top:none; border-radius:0 0 6px 6px; z-index: 2000;">
+							<ul id="menu-suggest-list" style="list-style:none; margin:0; padding:6px 0;">
+								<!-- filled by JS -->
+							</ul>
+						</div>
+					</div>
+					@if(($q ?? '') !== '')
+						<p class="mt-2" style="color:#c49b63;">Kết quả tìm kiếm cho: "{{ $q }}" ({{ $searchResults->count() }} sản phẩm)</p>
+					@endif
+				</div>
+			</div>
     		<div class="row justify-content-center mb-5">
           <div class="col-md-7 heading-section text-center ftco-animate">
           	<span class="subheading">Discover</span>
@@ -58,7 +80,32 @@
         </div>
     		<div class="row d-md-flex">
 	    		<div class="col-lg-12 ftco-animate p-md-5">
-		    		<div class="row">
+			    	<div class="row">
+					@if(isset($searchResults) && ($q ?? '') !== '')
+					<div class="col-md-12 mb-5">
+						<h3 class="mb-4" style="color:#c49b63;">Search Results</h3>
+						<div class="row">
+							@forelse($searchResults as $product)
+								<div class="col-md-4 text-center">
+									<div class="menu-wrap">
+										<a href="{{ route('product.single',$product->product_id) }}" class="menu-img img mb-4" style="background-image: url({{ asset('assets/images/'.$product->image.'') }});"></a>
+										<div class="text">
+											<h3><a href="{{ route('product.single',$product->product_id) }}">{{ $product->name }}</a></h3>
+											<p>{{ \Illuminate\Support\Str::limit($product->description, 80) }}</p>
+											<p class="price"><span>{{ $product->price }}₫</span></p>
+											<p><a href="{{ route('product.single',$product->product_id) }}" class="btn btn-primary btn-outline-primary">Show detail</a></p>
+										</div>
+									</div>
+								</div>
+							@empty
+								<div class="col-md-12">
+									<div class="alert alert-warning" style="background:#1f2937; color:#fff; border:1px solid #2b2b2b;">Không tìm thấy sản phẩm phù hợp.</div>
+								</div>
+							@endforelse
+						</div>
+						<hr style="border-color:#2b2b2b;">
+					</div>
+					@endif
 		          <div class="col-md-12 nav-link-wrap mb-5">
 		            <div class="nav ftco-animate nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
@@ -200,4 +247,115 @@
 		    </div>
     	</div>
     </section>
+    
+	<style>
+	/* Typeahead styles for menu search */
+	#menu-search-suggestions ul li { cursor: pointer; padding: 8px 12px; color:#e5e7eb; }
+	#menu-search-suggestions ul li:hover, #menu-search-suggestions ul li.active { background:#1f2937; }
+	#menu-search-suggestions .no-results { color:#9ca3af; cursor: default; }
+	</style>
+
+	<script>
+	(function(){
+		const inputEl = document.getElementById('menu-search-input');
+		const dropdown = document.getElementById('menu-search-suggestions');
+		const listEl = document.getElementById('menu-suggest-list');
+		if(!inputEl || !dropdown || !listEl) return;
+
+		const suggestUrl = "{{ route('products.suggest') }}";
+		const productUrlTemplate = "{{ route('product.single', ['id' => 'ID_PLACEHOLDER']) }}";
+		let debounceTimer = null;
+		let items = [];
+		let activeIndex = -1;
+
+		function showDropdown(){ dropdown.style.display = 'block'; }
+		function hideDropdown(){ dropdown.style.display = 'none'; activeIndex = -1; }
+		function clearList(){ listEl.innerHTML = ''; }
+		function setActive(index){
+			const children = Array.from(listEl.children);
+			children.forEach((li,i)=> li.classList.toggle('active', i===index));
+			activeIndex = index;
+		}
+		function navigate(delta){
+			if(!items.length) return;
+			let next = activeIndex + delta;
+			if(next < 0) next = items.length - 1;
+			if(next >= items.length) next = 0;
+			setActive(next);
+		}
+		function goToActive(){
+			if(activeIndex < 0 || activeIndex >= items.length) return;
+			const url = items[activeIndex].url;
+			if(url) window.location.href = url;
+		}
+
+		function render(data){
+			clearList();
+			items = [];
+			if(!data || !data.length){
+				const li = document.createElement('li');
+				li.textContent = 'Không có gợi ý phù hợp';
+				li.className = 'no-results';
+				listEl.appendChild(li);
+				showDropdown();
+				return;
+			}
+			data.forEach((item, idx)=>{
+				const li = document.createElement('li');
+				li.setAttribute('role','option');
+				const url = productUrlTemplate.replace('ID_PLACEHOLDER', item.product_id);
+				li.innerHTML = `<span>${item.name}</span>`;
+				li.addEventListener('mousedown', function(e){
+					// mousedown to prevent input blur before navigation
+					e.preventDefault();
+					window.location.href = url;
+				});
+				listEl.appendChild(li);
+				items.push({ name: item.name, url });
+			});
+			setActive(0);
+			showDropdown();
+		}
+
+		async function fetchSuggest(q){
+			try{
+				const resp = await fetch(`${suggestUrl}?q=${encodeURIComponent(q)}`, { headers: { 'X-Requested-With': 'XMLHttpRequest' }});
+				if(!resp.ok) throw new Error('Network error');
+				const data = await resp.json();
+				render(data);
+			}catch(err){
+				clearList();
+				const li = document.createElement('li');
+				li.textContent = 'Lỗi tải gợi ý';
+				li.className = 'no-results';
+				listEl.appendChild(li);
+				showDropdown();
+			}
+		}
+
+		function onInput(){
+			const q = inputEl.value.trim();
+			if(q.length < 2){ hideDropdown(); clearList(); return; }
+			if(debounceTimer) clearTimeout(debounceTimer);
+			debounceTimer = setTimeout(()=> fetchSuggest(q), 180);
+		}
+
+		inputEl.addEventListener('input', onInput);
+		inputEl.addEventListener('focus', ()=>{ if(inputEl.value.trim().length >= 2) onInput(); });
+		inputEl.addEventListener('keydown', (e)=>{
+			if(dropdown.style.display === 'block'){
+				if(e.key === 'ArrowDown'){ e.preventDefault(); navigate(1); }
+				else if(e.key === 'ArrowUp'){ e.preventDefault(); navigate(-1); }
+				else if(e.key === 'Enter'){ e.preventDefault(); goToActive(); }
+				else if(e.key === 'Escape'){ hideDropdown(); }
+			}
+		});
+
+		document.addEventListener('click', (e)=>{
+			const container = inputEl.closest('.position-relative') || inputEl.parentElement;
+			if(container && !container.contains(e.target)) hideDropdown();
+		});
+	})();
+	</script>
+
 </x-app-layout>
