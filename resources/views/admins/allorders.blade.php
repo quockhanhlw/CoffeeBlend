@@ -32,8 +32,7 @@
                     <th scope="col">street_address</th>
                     <th scope="col">total_price</th>
                     <th scope="col">status</th>
-                    <th scope="col">change status</th>
-                    <th scope="col">delete</th>
+                    <th scope="col" class="text-center">actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -51,8 +50,14 @@
                     <td>{{ $order->address }}</td>
                     <td>{{ $order->price }}</td>
                     <td>{{ $order->status }}</td>
-                    <td><a href="{{route('edit.order', $order->order_id)}}" class="btn btn-warning text-white text-center ">change</a></td>
-                    <td><a href="{{ route('delete.order', $order->order_id)}}" class="btn btn-danger  text-center ">delete</a></td>
+                    <td class="text-center">
+                        <a href="{{route('edit.order', $order->order_id)}}" class="btn btn-sm btn-warning text-white" title="Change Status">
+                           <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{{ route('delete.order', $order->order_id)}}" class="btn btn-sm btn-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this order?')">
+                           <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
                   </tr>
                 @endforeach
 

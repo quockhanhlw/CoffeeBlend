@@ -16,7 +16,8 @@
                   <select name="status" class="form-select  form-control" aria-label="Default select example">
                     <option selected>Choose Status</option>
                     <option value="Processing">Processing</option>
-                    <option value="Delivered">Booked</option>
+                    <option value="Booked">Booked</option>
+                    <option value="Cancelled">Cancelled</option>
                   </select>
                 </div>
 

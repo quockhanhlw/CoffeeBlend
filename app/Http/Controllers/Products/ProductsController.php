@@ -136,6 +136,41 @@ class ProductsController extends Controller
 
     public function storeCheckout(Request $request)
     {
+        // Validate input data
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'required|email|max:100',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:200',
+            'city' => 'required|string|max:50',
+            'country' => 'required|string|max:50',
+            'zip_code' => 'required|string|max:10',
+            'price' => 'required|numeric|min:0',
+            'user_id' => 'required|integer',
+        ], [
+            'first_name.required' => 'Vui lòng nhập tên.',
+            'first_name.max' => 'Tên không được vượt quá 50 ký tự.',
+            'last_name.required' => 'Vui lòng nhập họ.',
+            'last_name.max' => 'Họ không được vượt quá 50 ký tự.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không đúng định dạng.',
+            'email.max' => 'Email không được vượt quá 100 ký tự.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'phone.max' => 'Số điện thoại không được vượt quá 20 ký tự.',
+            'address.required' => 'Vui lòng nhập địa chỉ.',
+            'address.max' => 'Địa chỉ không được vượt quá 200 ký tự.',
+            'city.required' => 'Vui lòng nhập thành phố.',
+            'city.max' => 'Thành phố không được vượt quá 50 ký tự.',
+            'country.required' => 'Vui lòng chọn quốc gia.',
+            'country.max' => 'Quốc gia không được vượt quá 50 ký tự.',
+            'zip_code.required' => 'Vui lòng nhập mã bưu điện.',
+            'zip_code.max' => 'Mã bưu điện không được vượt quá 10 ký tự.',
+            'price.required' => 'Giá không hợp lệ.',
+            'price.numeric' => 'Giá phải là số.',
+            'price.min' => 'Giá phải lớn hơn 0.',
+        ]);
+
         // Ngăn chặn double submit - kiểm tra xem có order tương tự vừa được tạo không
         $recentOrder = Order::where('user_id', Auth::user()->user_id)
             ->where('email', $request->email)
@@ -161,7 +196,18 @@ class ProductsController extends Controller
         }
 
         // Create order
-        $checkout = Order::create($request->all());
+        $checkout = Order::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state' => $request->country, // Map country to state
+            'zip_code' => $request->zip_code,
+            'price' => $request->price,
+            'user_id' => $request->user_id,
+        ]);
 
         Log::info('Created Order #'.$checkout->order_id.' for user '.Auth::user()->user_id.' with price $'.$request->price);
 

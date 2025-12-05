@@ -31,8 +31,7 @@
                     <th scope="col">message</th>
                     <th scope="col">status</th>
                     <th scope="col">created_at</th>
-                    <th scope="col">change status</th>
-                    <th scope="col">delete</th>
+                    <th scope="col" class="text-center">actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -49,8 +48,11 @@
                     <td>{{ $booking->message }}</td>
                     <td>{{$booking->status}}</td>
                     <td>{{ $booking->created_at }}</td>
-                    <td><a href="{{ route('edit.booking.staff', $booking->booking_id) }}" class="btn btn-warning text-white text-center ">change</a></td>
-                    <td><a href="{{ route('delete.booking.staff', $booking->booking_id)}}" class="btn btn-danger  text-center ">delete</a></td>
+                    <td class="text-center">
+                        <a href="{{ route('edit.booking.staff', $booking->booking_id) }}" class="btn btn-sm btn-warning text-white" title="Change Status">
+                           <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
                   </tr>
                                       
                 @endforeach

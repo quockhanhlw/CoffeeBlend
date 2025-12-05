@@ -53,7 +53,7 @@
                       				{{ $booking->phone }}
 					          </td>
 						        
-						        <td class="total">${{ $booking->message }}</td>
+						        <td class="total">{{ $booking->message }}</td>
                     			<td class="total">{{ $booking->status }}</td>
 								<td class="total">
 								@if($booking->status == 'Booked')

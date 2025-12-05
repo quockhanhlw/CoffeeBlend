@@ -274,7 +274,12 @@
         </div>
       @endif
       
-      <form method="POST" action="{{ route('check.login.admin') }}">
+      <div id="session-expired-alert" class="alert" style="display: none;">
+        <i class="fas fa-clock"></i>
+        <span>Phiên đăng nhập đã hết hạn. Vui lòng thử lại.</span>
+      </div>
+      
+      <form method="POST" action="{{ route('check.login.admin') }}" id="loginForm">
         @csrf
         
         <div class="form-group">
@@ -319,6 +324,68 @@
       icon.classList.add('fa-eye');
     }
   }
+  
+  // Check if page was loaded due to 419 error (from URL or referrer)
+  window.addEventListener('DOMContentLoaded', function() {
+    // Check if coming back from a 419 error
+    if (document.referrer.includes('419') || window.location.search.includes('session_expired')) {
+      document.getElementById('session-expired-alert').style.display = 'flex';
+      // Auto hide after 5 seconds
+      setTimeout(function() {
+        document.getElementById('session-expired-alert').style.display = 'none';
+      }, 5000);
+    }
+    
+    // Refresh CSRF token every 10 minutes to prevent expiration
+    setInterval(function() {
+      fetch('{{ route("check.login.admin") }}', {
+        method: 'HEAD',
+        credentials: 'same-origin'
+      }).then(function(response) {
+        // Token is still valid
+        console.log('CSRF token refreshed');
+      }).catch(function() {
+        // Token expired, reload page to get new token
+        console.log('Session expired, reloading...');
+        window.location.href = window.location.href + '?session_expired=1';
+      });
+    }, 600000); // 10 minutes
+  });
+  
+  // Handle form submission to catch 419 errors
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const formData = new FormData(form);
+    
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }).then(function(response) {
+      if (response.status === 419) {
+        // Session expired
+        document.getElementById('session-expired-alert').style.display = 'flex';
+        // Reload page to get new CSRF token
+        setTimeout(function() {
+          window.location.reload();
+        }, 2000);
+      } else if (response.redirected) {
+        // Successful login, follow redirect
+        window.location.href = response.url;
+      } else {
+        // Other response, submit normally
+        form.submit();
+      }
+    }).catch(function(error) {
+      // Network error or other issue, submit normally
+      console.error('Error:', error);
+      form.submit();
+    });
+  });
   </script>
 </body>
 </html>

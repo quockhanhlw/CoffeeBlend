@@ -74,19 +74,19 @@
 									<div class="order-details-collapse" id="orderDetails{{ $order->order_id }}" style="display: none;">
 										<div class="card m-3" style="border: none; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
 											<div class="card-body p-4">
-												<h5 class="mb-4" style="color: #c49b63; font-weight: 600; border-bottom: 2px solid #c49b63; padding-bottom: 10px;">
+												<h5 class="mb-4" style="color: #c49b63; font-weight: 800; font-size: 26px; letter-spacing: .3px; border-bottom: 2px solid #c49b63; padding-bottom: 10px;">
 													<i class="fas fa-shopping-bag mr-2"></i>Order Items
 												</h5>
 												@if($order->orderItems->count() > 0)
 													<div class="table-responsive">
-														<table class="table table-hover" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+														<table class="table table-hover order-items-table" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
 															<thead style="background: linear-gradient(135deg, #c49b63 0%, #a67c52 100%); color: white;">
 																<tr>
 																	<th style="padding: 15px; border: none; width: 120px; text-align: center;">Image</th>
 																	<th style="padding: 15px; border: none; width: 30%; padding-left: 20px;">Product Name</th>
 																	<th style="padding: 15px; border: none; width: 15%; text-align: center;">Price</th>
 																	<th style="padding: 15px; border: none; width: 15%; text-align: center;">Quantity</th>
-																	<th style="padding: 15px; padding-right: 25px; border: none; width: 20%; text-align: right;">Subtotal</th>
+																	<th class="col-subtotal" style="padding: 15px; border: none;">Subtotal</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -106,7 +106,7 @@
 																	<td style="padding: 15px; vertical-align: middle; text-align: center;">
 																		<span class="badge" style="background-color: #c49b63; color: #fff; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600;">x{{ $item->quantity }}</span>
 																	</td>
-																	<td style="padding: 15px; vertical-align: middle; text-align: right; padding-right: 25px;">
+																	<td class="col-subtotal" style="padding: 15px; vertical-align: middle;">
 																		<span style="color: #c49b63; font-weight: 700; font-size: 17px;">${{ number_format($item->subtotal, 2) }}</span>
 																	</td>
 																</tr>
@@ -115,7 +115,7 @@
 																	<td colspan="4" style="padding: 20px 15px; text-align: right; font-weight: 700; font-size: 17px; color: #333;">
 																		Total:
 																	</td>
-																	<td style="padding: 20px 25px 20px 15px; text-align: right; font-weight: 800; font-size: 20px; color: #c49b63;">
+																	<td class="col-subtotal" style="padding: 20px 25px 20px 15px; font-weight: 800; font-size: 20px; color: #c49b63;">
 																		${{ number_format($order->orderItems->sum('subtotal'), 2) }}
 																	</td>
 																</tr>
@@ -246,8 +246,19 @@ $(document).ready(function() {
     .order-details-collapse {
         overflow: hidden;
     }
-    
-    /* Đảm bảo dòng thông tin đơn hàng chính KHÔNG bị ảnh hưởng */
+
+    /* Align Subtotal column perfectly across header and rows */
+    .order-items-table .col-subtotal {
+        text-align: center !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        width: 20% !important;
+        white-space: nowrap;
+    }
+    .order-items-table thead th.col-subtotal {
+        text-align: center !important; /* center header label */
+        padding-right: 15px !important; /* match other headers */
+    }    /* Đảm bảo dòng thông tin đơn hàng chính KHÔNG bị ảnh hưởng */
     #ordersTable > tbody > tr {
         background-color: transparent !important;
     }

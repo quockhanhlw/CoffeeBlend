@@ -61,6 +61,11 @@
                 display: block !important;
                 visibility: visible !important;
             }
+      /* Ensure dropdown remains on top and clickable */
+      .navbar .dropdown-menu {
+        z-index: 2000 !important;
+        margin-top: 0.5rem;
+      }
             .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
                 color: #fff !important;
                 opacity: 1 !important;
@@ -209,12 +214,12 @@
 	          <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contact</a></li>
 	          <li class="nav-item cart"><a href="{{ route('cart') }}" class="nav-link"><span class="icon icon-shopping_cart"></span></a></li>
                 @auth
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ Auth::user()->name }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('users.orders') }}">
                               My Orders
                             </a>
