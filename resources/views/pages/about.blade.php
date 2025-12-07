@@ -179,7 +179,7 @@
     			<div class="col-md-6 col-lg-4 ftco-animate">
     				<div class="staff" style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); transition: all 0.4s ease; margin-bottom: 40px; max-width: 320px; margin-left: auto; margin-right: auto; position: relative; height: 400px;">
     					<div class="img-wrap" style="height: 100%; width: 100%; overflow: hidden; position: relative;">
-    						<div class="img" style="height: 100%; width: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; transition: all 0.4s ease; background-image: url({{ asset('assets/images/person_1.jpg') }});"></div>
+    						<div class="img" style="height: 100%; width: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; transition: all 0.4s ease; background-image: url({{ asset('assets/images/person_2.jpg') }});"></div>
     					</div>
     					<div class="quick-info" style="position: absolute; top: 20px; left: 20px; right: 20px; background: rgba(0, 0, 0, 0.7); padding: 15px; border-radius: 10px; color: white; transform: translateY(-100%); opacity: 0; transition: all 0.4s ease;">
     						<div class="role" style="color: #c49b63; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Marketing Director & Co-Founder</div>

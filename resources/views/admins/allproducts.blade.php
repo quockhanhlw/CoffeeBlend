@@ -56,7 +56,7 @@
               
               <!-- Pagination -->
               <div class="d-flex justify-content-center">
-                {{ $products->links() }}
+                {{ $products->onEachSide(1)->links('vendor.pagination.numbers-only') }}
               </div>
             </div>
           </div>
